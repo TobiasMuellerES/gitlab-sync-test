@@ -1,13 +1,20 @@
 name: Mirror to Bitbucket Repo
 
 on: [push]
-  ...
-      steps:
-        - uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
-        - uses: yesolutions/mirror-action@master
-          with:
-            REMOTE: 'gitlab.opencode.de:tm-test/sync-test.git'
-            GIT_USERNAME: project_596_bot
-            GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+
+# Ensures that only one mirror task will run at a time.
+concurrency:
+  group: git-mirror
+
+jobs:
+  git-mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: yesolutions/mirror-action@master
+        with:
+          REMOTE: 'gitlab.opencode.de:tm-test/sync-test.git'
+          GIT_USERNAME: project_596_bot
+          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
