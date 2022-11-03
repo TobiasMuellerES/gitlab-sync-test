@@ -15,6 +15,6 @@ jobs:
           fetch-depth: 0
       - uses: yesolutions/mirror-action@master
         with:
-          REMOTE: 'gitlab.opencode.de:tm-test/sync-test.git'
+          REMOTE: 'https://gitlab.opencode.de/tm-test/sync-test.git'
           GIT_USERNAME: project_596_bot
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
